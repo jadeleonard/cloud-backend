@@ -1,0 +1,117 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  directUrl    = env("DATABASE_URL_UNPOOLED")
+  relationMode = "foreignKeys"
+}
+
+model User {
+  id       Int     @id @default(autoincrement())
+  name     String?
+  email    String  @unique
+  role     Role    @default(USER)
+  address  String
+  mykartId String? @db.Uuid
+  mykart   mykart? @relation(fields: [mykartId], references: [id])
+}
+
+model accesories {
+  id          String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name        String? @db.VarChar(500)
+  description String? @db.VarChar(500)
+  image       String? @db.VarChar(500)
+  price       String? @db.VarChar(500)
+  seller      String? @db.VarChar(500)
+}
+
+model carousel {
+  id    String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name  String? @db.VarChar(255)
+  image String? @db.VarChar(255)
+}
+
+model clothes {
+  id          String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name        String? @db.VarChar(500)
+  description String? @db.VarChar(500)
+  image       String? @db.VarChar(500)
+  price       String? @db.VarChar(500)
+  seller      String? @db.VarChar(500)
+}
+
+model electronic {
+  id          String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name        String? @db.VarChar(500)
+  description String? @db.VarChar(500)
+  image       String? @db.VarChar(500)
+  price       String? @db.VarChar(500)
+  seller      String? @db.VarChar(500)
+}
+
+model gaming {
+  id          String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name        String? @db.VarChar(500)
+  description String? @db.VarChar(500)
+  image       String? @db.VarChar(500)
+  price       String? @db.VarChar(500)
+  seller      String? @db.VarChar(500)
+}
+
+model house {
+  id          String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name        String? @db.VarChar(500)
+  description String? @db.VarChar(500)
+  image       String? @db.VarChar(500)
+  price       String? @db.VarChar(500)
+  seller      String? @db.VarChar(500)
+}
+
+model items {
+  id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name        String?  @db.VarChar(255)
+  description String?
+  price       Decimal? @db.Decimal(10, 2)
+  seller      String?  @db.VarChar(255)
+  image       String?  @db.VarChar(255)
+}
+
+model mykart {
+  id     String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  values Int
+  User   User[]
+}
+
+model navbar {
+  id      Int     @id @default(autoincrement())
+  href    String? @db.VarChar(255)
+  section String? @db.VarChar(255)
+}
+
+model shoes {
+  id          String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name        String? @db.VarChar(500)
+  image       String? @db.VarChar(500)
+  description String? @db.VarChar(500)
+  seller      String? @db.VarChar(500)
+  price       String? @db.VarChar(500)
+  image2      String? @db.VarChar(500)
+  image3      String? @db.VarChar(500)
+  image4      String? @db.VarChar(500)
+  image5      String? @db.VarChar(500)
+  image6      String? @db.VarChar(500)
+}
+
+model user {
+  id       String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  email    String
+  password String
+}
+
+enum Role {
+  USER
+  ADMIN
+}
