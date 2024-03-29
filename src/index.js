@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
   res.send('Hello');
 });
 
-app.get('/api/navbar', async (req, res) => {
+app.get('/api/navbar', cacheMiddleware,async (req, res) => {
   try {
     const response = await prisma.navbar.findMany();
     res.json(response); // Just send the response directly
@@ -41,7 +41,7 @@ app.get('/api/navbar', async (req, res) => {
   }
 });
 
-app.get('/api/shoes', async (req, res) => { // Corrected parameters order
+app.get('/api/shoes', cacheMiddleware,async (req, res) => { // Corrected parameters order
   try {
     const response = await prisma.shoes.findMany();
     res.json(response); // Just send the response directly
@@ -54,3 +54,5 @@ app.get('/api/shoes', async (req, res) => { // Corrected parameters order
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
+
+export default app
